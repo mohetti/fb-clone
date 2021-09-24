@@ -1,4 +1,5 @@
 import { createContext } from 'react';
+/*
 type UserType =
   | undefined
   | {
@@ -15,6 +16,7 @@ type UserType =
           };
       setUserInfo: Function;
     };
+*/
 
 export const UserContext = createContext<any>({
   userInfo: undefined,

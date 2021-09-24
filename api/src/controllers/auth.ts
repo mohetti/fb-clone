@@ -73,7 +73,7 @@ export const signup: RequestHandler = async (req, res, next) => {
         email: req.body.email,
         password: hashedPassword,
         facebook: '',
-        img: '',
+        img: '5baa1ddad1b11e01af1f2243390dc974',
       });
       await newUser.save();
       return res.json({

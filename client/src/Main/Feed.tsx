@@ -8,6 +8,7 @@ import { getMessages } from '../util/messages';
 import Moment from 'react-moment';
 import moment from 'moment';
 
+/*
 type ResponseSchema = {
   _id: string;
   message: string;
@@ -20,6 +21,7 @@ type ResponseSchema = {
     _id: string;
   };
 };
+*/
 
 function Feed(props: any) {
   const [messages, setMessages] = useState<any>(undefined);
@@ -51,9 +53,9 @@ function Feed(props: any) {
       });
     }
     return;
+    // eslint-disable-next-line
   }, [loadMessages, csrf]);
 
-  let test = 'test';
   // TESTING INFINITE SCROLL
   const handleScroll = (e: any) => {
     const { offsetHeight, scrollTop, scrollHeight } = e.target;
@@ -215,7 +217,7 @@ function Feed(props: any) {
                   <div>{x.message}</div>
                 )}
 
-                {user && x.likes.indexOf(user.userInfo!._id) !== -1 ? (
+                {user.userInfo && x.likes.indexOf(user.userInfo!._id) !== -1 ? (
                   <div>I like</div>
                 ) : (
                   <div>I dont like</div>
@@ -223,19 +225,21 @@ function Feed(props: any) {
                 <button onClick={like} id={x._id}>
                   Likes {x.likes.length}
                 </button>
-                {user && x.user._id === user.userInfo!._id && (
+                {user.userInfo && x.user._id === user.userInfo!._id && (
                   <button onClick={deleteMessage} id={x._id}>
                     Delete
                   </button>
                 )}
-                <button
-                  onClick={(e) => {
-                    editMessage(e, x.message);
-                  }}
-                  id={x._id}
-                >
-                  Edit
-                </button>
+                {user.userInfo && x.user._id === user.userInfo!._id && (
+                  <button
+                    onClick={(e) => {
+                      editMessage(e, x.message);
+                    }}
+                    id={x._id}
+                  >
+                    Edit
+                  </button>
+                )}
               </div>
             );
           })}
@@ -247,7 +251,7 @@ function Feed(props: any) {
   return (
     <div>
       <Navbar />
-      {user && (
+      {user.userInfo && (
         <div>
           {user.userInfo!.firstName} {user.userInfo!.surName}
         </div>

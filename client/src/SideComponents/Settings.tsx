@@ -55,7 +55,6 @@ function Settings(props: any) {
       credentials: 'include',
     });
     const response = await fetchData.json();
-    console.log(response);
     setUserInfo(response.docs);
   };
   const onFileChange = (e: React.SyntheticEvent) => {

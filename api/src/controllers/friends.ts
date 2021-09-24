@@ -32,11 +32,12 @@ export const sendFriendResponse: RequestHandler = (req, res, next) => {
         {
           $push: { friends: req.body.id },
           $pull: { friendsRequest: req.body.id },
-        }
+        },
+        { new: true }
       );
     })
     .then((response) => {
-      return res.json({ status: 200 });
+      return res.json({ status: 200, docs: response });
     });
 };
 

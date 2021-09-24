@@ -20,6 +20,7 @@ function Friends(props: any) {
 
   const csrf = useContext(CSRFContext);
   const user = useContext(UserContext);
+  const { userInfo, setUserInfo } = useContext(UserContext);
 
   const getUsersList = async () => {
     const fetchData = await fetch('http://localhost:3000/friends/suggestions', {
@@ -62,10 +63,11 @@ function Friends(props: any) {
         setRerender(false);
       });
     }
+    // eslint-disable-next-line
   }, [rerender]);
 
   const addFriend = async (id: any) => {
-    const fetchData = await fetch('http://localhost:3000/friends/request', {
+    await fetch('http://localhost:3000/friends/request', {
       method: 'PUT',
       mode: 'cors',
       credentials: 'include',
@@ -79,8 +81,8 @@ function Friends(props: any) {
     return setRerender(true);
   };
 
-  const acceptFriend = (id: any) => {
-    fetch('http://localhost:3000/friends/response', {
+  const acceptFriend = async (id: any) => {
+    const fetchData = await fetch('http://localhost:3000/friends/response', {
       method: 'PUT',
       mode: 'cors',
       credentials: 'include',
@@ -90,9 +92,10 @@ function Friends(props: any) {
         'xsrf-token': csrf,
       },
       body: JSON.stringify({ id: id }),
-    }).then((res) => {
-      return setRerender(true);
     });
+    const response = await fetchData.json();
+    setUserInfo(response.docs);
+    return setRerender(true);
   };
 
   const deleteFriend = (id: any) => {

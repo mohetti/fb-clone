@@ -1,5 +1,6 @@
 import { RequestHandler } from 'express';
 import Message from '../models/newMessage';
+import User from '../models/newUser';
 
 export const createMessage: RequestHandler = async (req, res, next) => {
   try {
@@ -33,26 +34,31 @@ export const getMessages: RequestHandler = (req, res, next) => {
   const count = +req.query.count!;
   const skip = +req.query.skip!;
 
-  const messageHolders = [...req.session.user!.friends, req.session.user!._id];
-  Message.find({
-    user: { $in: messageHolders },
-  })
-    .populate({
-      path: 'user',
-      model: 'User',
-      select: {
-        password: 0,
-        friends: 0,
-        friendsRequest: 0,
-        email: 0,
-        facebook: 0,
-      },
+  User.findOne({ _id: req.session.user!._id }).then((response: any) => {
+    console.log(response);
+    const messageHolders = Array.from(response.friends);
+    messageHolders.push(req.session.user!._id);
+    console.log(messageHolders);
+    Message.find({
+      user: { $in: messageHolders },
     })
-    .sort({ time: -1 })
-    .skip(skip)
-    .limit(count)
-    .exec((err, docs) => {
-      if (err) return next(err);
-      return res.json({ status: 200, docs: docs });
-    });
+      .populate({
+        path: 'user',
+        model: 'User',
+        select: {
+          password: 0,
+          friends: 0,
+          friendsRequest: 0,
+          email: 0,
+          facebook: 0,
+        },
+      })
+      .sort({ time: -1 })
+      .skip(skip)
+      .limit(count)
+      .exec((err, docs) => {
+        if (err) return next(err);
+        return res.json({ status: 200, docs: docs });
+      });
+  });
 };
