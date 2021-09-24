@@ -25,6 +25,7 @@ const Routing = () => {
   const [token, setToken] = useState('');
   const [loginStatus, setLoginStatus] = useState<LoginType>(undefined);
   const [userInfo, setUserInfo] = useState(undefined);
+  const value = { userInfo, setUserInfo };
   const fetchLoginStatus = async () => {
     const fetchData = await fetch('http://localhost:3000/auth/checkauth', {
       method: 'GET',
@@ -65,7 +66,7 @@ const Routing = () => {
       <Switch>
         <CSRFContext.Provider value={token}>
           <LoginContext.Provider value={loginStatus}>
-            <UserContext.Provider value={userInfo}>
+            <UserContext.Provider value={value}>
               <UnAuthenticatedRoute exact path='/'>
                 <Landing fetchLoginStatus={fetchLoginStatus} />
               </UnAuthenticatedRoute>

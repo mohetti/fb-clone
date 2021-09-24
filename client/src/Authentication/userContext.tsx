@@ -2,13 +2,21 @@ import { createContext } from 'react';
 type UserType =
   | undefined
   | {
-      _id: string;
-      email: string;
-      firstName: string;
-      surName: string;
-      friends: [string];
-      friendsRequest: [string];
-      img: string;
+      userInfo:
+        | undefined
+        | {
+            _id: string;
+            email: string;
+            firstName: string;
+            surName: string;
+            friends: [string];
+            friendsRequest: [string];
+            img: string;
+          };
+      setUserInfo: Function;
     };
 
-export const UserContext = createContext<UserType>(undefined);
+export const UserContext = createContext<any>({
+  userInfo: undefined,
+  setUserInfo: () => {},
+});

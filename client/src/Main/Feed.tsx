@@ -215,7 +215,7 @@ function Feed(props: any) {
                   <div>{x.message}</div>
                 )}
 
-                {user && x.likes.indexOf(user!._id) !== -1 ? (
+                {user && x.likes.indexOf(user.userInfo!._id) !== -1 ? (
                   <div>I like</div>
                 ) : (
                   <div>I dont like</div>
@@ -223,7 +223,7 @@ function Feed(props: any) {
                 <button onClick={like} id={x._id}>
                   Likes {x.likes.length}
                 </button>
-                {user && x.user._id === user!._id && (
+                {user && x.user._id === user.userInfo!._id && (
                   <button onClick={deleteMessage} id={x._id}>
                     Delete
                   </button>
@@ -249,7 +249,7 @@ function Feed(props: any) {
       <Navbar />
       {user && (
         <div>
-          {user.firstName} {user.surName}
+          {user.userInfo!.firstName} {user.userInfo!.surName}
         </div>
       )}
       <form action='submit' onSubmit={postMessage}>

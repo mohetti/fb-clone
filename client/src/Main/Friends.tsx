@@ -44,13 +44,13 @@ function Friends(props: any) {
         const waitForResponse: any = [];
 
         res.map((x: any) => {
-          if (x.friends.indexOf(user?._id) !== -1) {
+          if (x.friends.indexOf(user?.userInfo!._id) !== -1) {
             return friends.push(x);
           }
-          if (user?.friendsRequest.indexOf(x._id) !== -1) {
+          if (user?.userInfo!.friendsRequest.indexOf(x._id) !== -1) {
             return answerFriendRequest.push(x);
           }
-          if (x.friendsRequest.indexOf(user._id) !== -1) {
+          if (x.friendsRequest.indexOf(user.userInfo!._id) !== -1) {
             return waitForResponse.push(x);
           }
           return friendsSuggestions.push(x);

@@ -13,7 +13,10 @@ function Profile(props: any) {
       <Navbar />
       <div>Profile</div>
       {user && (
-        <img src={'http://localhost:3000/' + user!.img} alt='hello'></img>
+        <img
+          src={'http://localhost:3000/' + user!.userInfo!.img}
+          alt='hello'
+        ></img>
       )}
       <Logout fetchLoginStatus={props.fetchLoginStatus} />
     </div>

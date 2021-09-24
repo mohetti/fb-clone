@@ -3,10 +3,13 @@ import Navbar from '../SideComponents/Navbar';
 import Logout from '../SideComponents/Logout';
 
 import { CSRFContext } from '../Authentication/csrfContext';
+import { UserContext } from '../Authentication/userContext';
 
 function Settings(props: any) {
   const [selectedFile, setSelectedFile] = useState<any>();
   const csrf = useContext(CSRFContext);
+
+  const { userInfo, setUserInfo } = useContext(UserContext);
 
   const deleteProfile = async () => {
     await fetch('http://localhost:3000/user/delete', {
@@ -51,8 +54,9 @@ function Settings(props: any) {
       },
       credentials: 'include',
     });
-    const response = fetchData.json();
+    const response = await fetchData.json();
     console.log(response);
+    setUserInfo(response.docs);
   };
   const onFileChange = (e: React.SyntheticEvent) => {
     const target = e.target as typeof e.target & {
