@@ -1,0 +1,13 @@
+import { createContext } from 'react';
+type UserType =
+  | undefined
+  | {
+      _id: string;
+      email: string;
+      firstName: string;
+      surName: string;
+      friends: [string];
+      friendsRequest: [string];
+    };
+
+export const UserContext = createContext<UserType>(undefined);
