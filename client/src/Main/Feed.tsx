@@ -191,6 +191,11 @@ function Feed(props: any) {
                 <div>
                   {x.user.firstName} {x.user.surName}
                 </div>
+                <img
+                  src={x.user.img}
+                  style={{ height: '50px', width: '50px' }}
+                  alt='hello'
+                />
                 <div>{formatDate(x)}</div>
                 {editMsg === x._id ? (
                   <form
