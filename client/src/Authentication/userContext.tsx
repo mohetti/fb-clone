@@ -8,6 +8,7 @@ type UserType =
       surName: string;
       friends: [string];
       friendsRequest: [string];
+      img: string;
     };
 
 export const UserContext = createContext<UserType>(undefined);
