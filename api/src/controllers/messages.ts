@@ -1,6 +1,7 @@
 import { RequestHandler } from 'express';
 import Message from '../models/newMessage';
 import User from '../models/newUser';
+import { UserInterface } from '../interfaces/userInterface';
 
 export const createMessage: RequestHandler = async (req, res, next) => {
   try {
@@ -16,29 +17,30 @@ export const createMessage: RequestHandler = async (req, res, next) => {
 };
 
 export const deleteMessage: RequestHandler = (req, res, next) => {
-  Message.findOneAndDelete({ _id: req.body.deleteMessage }).then((response) => {
-    return res.json({ status: 200 });
-  });
+  Message.findOneAndDelete({ _id: req.body.deleteMessage }, { new: true }).then(
+    (response) => {
+      return res.json({ status: 200 });
+    }
+  );
 };
 
 export const updateMessage: RequestHandler = (req, res, next) => {
   Message.findOneAndUpdate(
     { _id: req.body.id },
-    { message: req.body.message }
+    { message: req.body.message },
+    { new: true }
   ).then((response) => {
     return res.json({ status: 200 });
   });
 };
 
 export const getMessages: RequestHandler = (req, res, next) => {
-  const count = +req.query.count!;
-  const skip = +req.query.skip!;
+  const skip = +req.query.count!;
+  console.log(skip);
 
   User.findOne({ _id: req.session.user!._id }).then((response: any) => {
-    console.log(response);
     const messageHolders = Array.from(response.friends);
     messageHolders.push(req.session.user!._id);
-    console.log(messageHolders);
     Message.find({
       user: { $in: messageHolders },
     })
@@ -54,11 +56,31 @@ export const getMessages: RequestHandler = (req, res, next) => {
         },
       })
       .sort({ time: -1 })
-      .skip(skip)
-      .limit(count)
+      .limit(skip)
       .exec((err, docs) => {
         if (err) return next(err);
         return res.json({ status: 200, docs: docs });
       });
+  });
+};
+
+export const addComment: RequestHandler = (req, res, next) => {
+  const comment = {
+    user: {
+      firstName: req.session.user?.firstName,
+      surName: req.session.user?.surName,
+      img: req.session.user?.img,
+    },
+    comment: req.body.msg,
+  };
+  Message.findOneAndUpdate(
+    {
+      _id: req.body.msgId,
+    },
+    { $push: { comments: comment } },
+    { new: true }
+  ).then((response) => {
+    console.log(response);
+    return res.json({ status: 200, docs: response });
   });
 };

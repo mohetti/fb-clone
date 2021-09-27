@@ -1,8 +1,9 @@
 import { RequestHandler } from 'express';
-import User from '../models/newUser';
 import bcrypt from 'bcryptjs';
 import passport from 'passport';
 import '../util/passport';
+
+import User from '../models/newUser';
 import { UserInterface } from '../interfaces/userInterface';
 
 export const checkAuth: RequestHandler = (req, res, next) => {

@@ -9,6 +9,7 @@ export interface UserInterface {
   friends: [ObjectId];
   friendsRequest: [ObjectId];
   facebook: string;
+  img: string;
 }
 
 export interface FacebookInterface {

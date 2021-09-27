@@ -24,3 +24,13 @@ export const updateProfile: RequestHandler = (req, res, next) => {
   console.log('Update Profile');
   res.send('Update Profile');
 };
+
+export const uploadImage: RequestHandler = (req, res, next) => {
+  User.findOneAndUpdate(
+    { _id: req.session.user!._id },
+    { img: req.file?.filename },
+    { new: true }
+  ).then((response) => {
+    return res.json({ status: 200, docs: response });
+  });
+};

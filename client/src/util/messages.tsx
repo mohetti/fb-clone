@@ -1,6 +1,7 @@
 export const getMessages = async (csrf: string, skip: number) => {
+  console.log(skip);
   const fetchData = await fetch(
-    `http://localhost:3000/messages?skip=${skip}&count=10`,
+    `http://localhost:3000/messages?count=${skip}`,
     {
       method: 'GET',
       mode: 'cors',

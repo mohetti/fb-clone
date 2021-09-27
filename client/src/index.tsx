@@ -43,7 +43,7 @@ const Routing = () => {
   };
 
   async function getToken() {
-    let test = await fetch('http://localhost:3000/form', {
+    let test = await fetch('http://localhost:3000/token', {
       headers: {
         method: 'GET',
         Accept: 'application/json',

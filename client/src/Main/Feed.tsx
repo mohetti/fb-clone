@@ -27,45 +27,38 @@ function Feed(props: any) {
   const [messages, setMessages] = useState<any>(undefined);
   const [editMsg, setEditMsg] = useState('');
   const currentEditText = useRef<any>('');
+  const comments = useRef<any>({});
   const [loadMessages, setLoadMessages] = useState(true);
 
   const user = useContext(UserContext);
   const csrf = useContext(CSRFContext);
 
-  const [skip, setSkip] = useState<any>(0);
+  const [skip, setSkip] = useState<any>(10);
+  const [readmore, setReadmore] = useState<any>('');
 
   useEffect(() => {
-    if (loadMessages && skip > 0) {
+    if (loadMessages || skip) {
       getMessages(csrf, skip).then((res) => {
         if (messages === undefined) return setMessages(res);
-        let copy = [...messages];
-        copy.push(...res);
-        console.log(copy);
-        setMessages(copy);
-        console.log(messages);
-        return setLoadMessages(false);
-      });
-    }
-    if (loadMessages && skip === 0) {
-      getMessages(csrf, skip).then((res) => {
         setMessages(res);
         return setLoadMessages(false);
       });
     }
-    return;
+
     // eslint-disable-next-line
-  }, [loadMessages, csrf]);
+  }, [skip, loadMessages, csrf]);
 
   // TESTING INFINITE SCROLL
   const handleScroll = (e: any) => {
     const { offsetHeight, scrollTop, scrollHeight } = e.target;
-    if (offsetHeight + scrollTop === scrollHeight) {
-      console.log('Test');
-      setSkip(messages!.length);
+
+    if (
+      offsetHeight + scrollTop === scrollHeight &&
+      messages!.length % 10 === 0
+    ) {
+      let newVal = skip + 10;
+      setSkip(newVal);
       setLoadMessages(true);
-    }
-    if (offsetHeight + scrollTop !== scrollHeight) {
-      setSkip(0);
     }
   };
 
@@ -141,7 +134,8 @@ function Feed(props: any) {
       },
       body: JSON.stringify({ deleteMessage: target.id }),
     });
-    return setLoadMessages(true);
+
+    setLoadMessages(true);
   };
 
   const editMessage = (e: React.SyntheticEvent, message: string) => {
@@ -176,6 +170,42 @@ function Feed(props: any) {
     });
     setEditMsg('');
     return setLoadMessages(true);
+  };
+
+  const addComment = async (e: React.SyntheticEvent) => {
+    e.preventDefault();
+    const target = e.target as HTMLInputElement;
+    if (
+      comments.current[target.id] === undefined ||
+      comments.current[target.id] === ''
+    ) {
+      return;
+    }
+    const data = JSON.stringify({
+      msgId: target.id,
+      msg: comments.current[target.id],
+    });
+
+    await fetch('http://localhost:3000/messages/comment', {
+      method: 'PUT',
+      mode: 'cors',
+      credentials: 'include',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        'xsrf-token': csrf,
+      },
+      body: data,
+    });
+    return setLoadMessages(true);
+  };
+
+  const updateComment = (e: React.SyntheticEvent, msgId: string) => {
+    const target = e.target as HTMLInputElement;
+    if (comments.current[msgId])
+      return (comments.current[msgId] = target.value);
+
+    comments.current = { ...comments.current, [msgId]: target.value };
   };
 
   const renderMessages = () => {
@@ -245,6 +275,61 @@ function Feed(props: any) {
                     Edit
                   </button>
                 )}
+                <div>
+                  {x._id === readmore &&
+                    x.comments.map((y: any, i: any) => {
+                      return (
+                        <div key={uniqid()}>
+                          <img
+                            src={y.user.img}
+                            style={{ height: '50px', width: '50px' }}
+                            alt='hello'
+                          />
+                          <div>
+                            {y.user.firstName} {y.surName}
+                          </div>
+                          <div>{y.comment}</div>
+                        </div>
+                      );
+                    })}
+                  {x._id !== readmore &&
+                    x.comments.slice(0, 3).map((y: any, i: any) => {
+                      return (
+                        <div key={uniqid()}>
+                          <img
+                            src={y.user.img}
+                            style={{ height: '50px', width: '50px' }}
+                            alt='hello'
+                          />
+                          <div>
+                            {y.user.firstName} {y.surName}
+                          </div>
+                          <div>{y.comment}</div>
+                        </div>
+                      );
+                    })}
+                  {x.comments.length > 3 && (
+                    <div
+                      onClick={() => {
+                        readmore === x._id
+                          ? setReadmore('')
+                          : setReadmore(x._id);
+                      }}
+                    >
+                      Read more...
+                    </div>
+                  )}
+                </div>
+                {
+                  <form id={x._id} action='submit' onSubmit={addComment}>
+                    <input
+                      type='text'
+                      onChange={(e) => updateComment(e, x._id)}
+                      placeholder='Comment...'
+                    />
+                    <button type='submit'>Submit Comment</button>
+                  </form>
+                }
               </div>
             );
           })}

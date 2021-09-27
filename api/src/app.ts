@@ -1,20 +1,22 @@
 import express, { Request, Response, NextFunction } from 'express';
-import mongoose, { ObjectId } from 'mongoose';
-import * as dotenv from 'dotenv';
+import session from 'express-session';
+import mongoose from 'mongoose';
+import cookieParser from 'cookie-parser';
+
 import authRoutes from './routes/auth';
 import userRoutes from './routes/user';
 import messagesRoutes from './routes/messages';
 import friendsRoutes from './routes/friends';
 import commentsRoutes from './routes/comments';
 import likesRoutes from './routes/likes';
+import User from './models/newUser';
+import { UserInterface } from './interfaces/userInterface';
+
+import * as dotenv from 'dotenv';
 import passport from 'passport';
 import * as passportConfig from './util/passport';
-import session from 'express-session';
 import MongoDBStore from 'connect-mongodb-session';
-import { UserInterface } from './interfaces/userInterface';
-import User from './models/newUser';
 import csrf from 'csurf';
-import cookieParser from 'cookie-parser';
 
 export const csrfProtection = csrf({ cookie: true });
 
@@ -48,7 +50,6 @@ app.use(
     },
   })
 );
-
 app.use((req: Request, res: Response, next: NextFunction) => {
   if (!req.session.user) {
     return next();
@@ -62,9 +63,9 @@ app.use((req: Request, res: Response, next: NextFunction) => {
       return next(err);
     });
 });
-
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(cookieParser());
 
 const mongoDB = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.luzem.mongodb.net/fb_clone?retryWrites=true&w=majority`;
 mongoose.connect(mongoDB, {});
@@ -74,13 +75,8 @@ db.once('open', function () {
   console.log('connected to mongodb');
 });
 
-// following as blueprint for csrfToken
-app.use(cookieParser());
-app.get('/form', csrfProtection, function (req, res) {
+app.get('/token', csrfProtection, function (req, res) {
   res.send({ csrfToken: req.csrfToken() });
-});
-app.post('/process', csrfProtection, function (req, res) {
-  res.json({ status: 200, msg: 'data is being processed' });
 });
 app.use('/auth', csrfProtection, authRoutes);
 app.use('/user', csrfProtection, userRoutes);

@@ -1,11 +1,11 @@
 import passport from 'passport';
 import passportLocal from 'passport-local';
 import passportFacebook from 'passport-facebook';
-import User from '../models/newUser';
-import { Request, Response, NextFunction } from 'express';
 import { NativeError } from 'mongoose';
-import { FacebookInterface, UserInterface } from '../interfaces/userInterface';
 import bcrypt from 'bcryptjs';
+
+import User from '../models/newUser';
+import { UserInterface } from '../interfaces/userInterface';
 
 import * as dotenv from 'dotenv';
 dotenv.config();

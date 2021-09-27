@@ -8,7 +8,7 @@ const MessageSchema = new Schema({
   user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   time: { type: Date, default: Date.now },
   likes: { type: [mongoose.Schema.Types.ObjectId], ref: 'User' },
-  comments: { type: [mongoose.Schema.Types.ObjectId], ref: 'Comment' },
+  comments: { type: [Object] },
 });
 
 const newMessage = mongoose.model('Message', MessageSchema);
