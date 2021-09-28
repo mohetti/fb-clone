@@ -75,6 +75,8 @@ export const signup: RequestHandler = async (req, res, next) => {
         password: hashedPassword,
         facebook: '',
         img: '5baa1ddad1b11e01af1f2243390dc974',
+        bio: '',
+        firstLogin: true,
       });
       await newUser.save();
       return res.json({

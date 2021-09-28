@@ -12,6 +12,8 @@ const UserSchema = new Schema({
   friendsRequest: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
   facebook: { type: String, select: false },
   img: { type: String },
+  bio: { type: String },
+  firstLogin: { type: Boolean },
 });
 
 UserSchema.virtual('url').get(function (this: UserInterface) {

@@ -3,8 +3,11 @@ import User from '../models/newUser';
 import Message from '../models/newMessage';
 
 export const getProfile: RequestHandler = (req, res, next) => {
-  console.log('Get Profile');
-  res.send('Get Profile');
+  User.findOne({ _id: req.body.id })
+    .select('firstName surName img bio')
+    .then((response) => {
+      return res.json({ status: 200, docs: response });
+    });
 };
 
 export const deleteProfile: RequestHandler = (req, res, next) => {
@@ -32,5 +35,25 @@ export const uploadImage: RequestHandler = (req, res, next) => {
     { new: true }
   ).then((response) => {
     return res.json({ status: 200, docs: response });
+  });
+};
+
+export const updateBio: RequestHandler = (req, res, next) => {
+  User.findOneAndUpdate(
+    { _id: req.session.user!._id },
+    { bio: req.body.bio },
+    { new: true }
+  ).then((response) => {
+    res.json({ status: 200 });
+  });
+};
+
+export const firstLogin: RequestHandler = (req, res, next) => {
+  User.findOneAndUpdate(
+    { _id: req.session.user!._id },
+    { firstLogin: false },
+    { new: true }
+  ).then((response) => {
+    res.json({ status: 200 });
   });
 };

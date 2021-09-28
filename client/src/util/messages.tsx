@@ -1,5 +1,4 @@
 export const getMessages = async (csrf: string, skip: number) => {
-  console.log(skip);
   const fetchData = await fetch(
     `http://localhost:3000/messages?count=${skip}`,
     {

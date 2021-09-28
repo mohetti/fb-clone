@@ -64,6 +64,25 @@ export const getMessages: RequestHandler = (req, res, next) => {
   });
 };
 
+export const getMsgsFromOthers: RequestHandler = (req, res, next) => {
+  Message.find({ user: req.body.id })
+    .populate({
+      path: 'user',
+      model: 'User',
+      select: {
+        password: 0,
+        friends: 0,
+        friendsRequest: 0,
+        email: 0,
+        facebook: 0,
+      },
+    })
+    .sort({ time: -1 })
+    .then((response: any) => {
+      return res.json({ status: 200, docs: response });
+    });
+};
+
 export const addComment: RequestHandler = (req, res, next) => {
   const comment = {
     user: {

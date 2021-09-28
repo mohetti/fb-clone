@@ -82,6 +82,8 @@ passport.use(
                 email: profile.emails![0].value,
                 facebook: accessToken,
                 img: '5baa1ddad1b11e01af1f2243390dc974',
+                bio: '',
+                firstLogin: true,
               });
               newUser.save();
               return done(null, newUser);

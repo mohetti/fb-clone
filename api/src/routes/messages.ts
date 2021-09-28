@@ -5,6 +5,7 @@ import {
   updateMessage,
   getMessages,
   addComment,
+  getMsgsFromOthers,
 } from '../controllers/messages';
 
 import isAuth from '../util/is-auth';
@@ -20,5 +21,7 @@ router.get('/', isAuth, getMessages);
 router.put('/edit', isAuth, updateMessage);
 
 router.put('/comment', isAuth, addComment);
+
+router.post('/', isAuth, getMsgsFromOthers);
 
 export default router;

@@ -7,6 +7,8 @@ import { UserContext } from '../Authentication/userContext';
 
 function Settings(props: any) {
   const [selectedFile, setSelectedFile] = useState<any>();
+  const [bio, setBio] = useState('');
+  const [success, setSuccess] = useState(false);
   const csrf = useContext(CSRFContext);
 
   const { userInfo, setUserInfo } = useContext(UserContext);
@@ -63,6 +65,30 @@ function Settings(props: any) {
     };
     setSelectedFile(target.files[0]);
   };
+  const addBio = async (e: React.SyntheticEvent) => {
+    e.preventDefault();
+    await fetch('http://localhost:3000/user/bio', {
+      method: 'POST',
+      mode: 'cors',
+      credentials: 'include',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        'xsrf-token': csrf,
+      },
+      body: JSON.stringify({ bio: bio }),
+    });
+    setSuccess(true);
+    setTimeout(() => {
+      setSuccess(false);
+    }, 2000);
+    setBio('');
+  };
+
+  const bioText = (e: React.SyntheticEvent) => {
+    const target = e.target as HTMLInputElement;
+    setBio(target.value);
+  };
   return (
     <div>
       <Navbar />
@@ -72,6 +98,11 @@ function Settings(props: any) {
         <input name='image' type='file' onChange={onFileChange} />
         <input type='submit' />
       </form>
+      <form onSubmit={addBio}>
+        <input name='bio' type='text' onChange={bioText} value={bio} />
+        <input type='submit' value='Add Bio' />
+      </form>
+      {success && <div>Bio successfully updated</div>}
       <Logout fetchLoginStatus={props.fetchLoginStatus} />
     </div>
   );
