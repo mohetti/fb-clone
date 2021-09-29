@@ -7,6 +7,9 @@ import { getMessages } from '../util/messages';
 import Moment from 'react-moment';
 import moment from 'moment';
 
+import likeImg from '../imgs/like.png';
+import noLikeImg from '../imgs/no-like.png';
+
 function Messages(props: any) {
   const [messages, setMessages] = useState<any>(undefined);
   const [editMsg, setEditMsg] = useState('');
@@ -194,7 +197,6 @@ function Messages(props: any) {
 
   const goToProfile = (e: React.SyntheticEvent) => {
     const target = e.currentTarget as HTMLElement;
-    console.log(user);
     target.id === user.userInfo._id
       ? history.push(`/profile`)
       : history.push(`/profile/${target.id}`);
@@ -204,23 +206,28 @@ function Messages(props: any) {
     if (messages) {
       return (
         <div
+          className='msg-container'
           style={{ height: '500px', overflowY: 'auto' }}
           onScroll={handleScroll}
         >
           {messages.map((x: any) => {
             return (
-              <div key={uniqid()}>
-                <div id={x.user._id} onClick={goToProfile}>
+              <div className='msg-border' key={uniqid()}>
+                <div
+                  style={{ cursor: 'pointer' }}
+                  id={x.user._id}
+                  onClick={goToProfile}
+                >
                   <div>
-                    {x.user.firstName} {x.user.surName}
+                    <img src={x.user.img} alt='hello' />
+                    <span>
+                      {x.user.firstName} {x.user.surName}
+                    </span>
                   </div>
-                  <img
-                    src={x.user.img}
-                    style={{ height: '50px', width: '50px' }}
-                    alt='hello'
-                  />
                 </div>
-                <div>{formatDate(x)}</div>
+                <div>
+                  <span>{formatDate(x)}</span>
+                </div>
                 {editMsg === x._id ? (
                   <form
                     action='submit'
@@ -228,47 +235,71 @@ function Messages(props: any) {
                       submitChanges(e, x._id);
                     }}
                   >
-                    <input
-                      type='text'
-                      ref={currentEditText}
-                      defaultValue={x.message}
-                    />
-                    <button type='submit'>Submit Changes</button>
-                    <button
-                      onClick={() => {
-                        cancel(x.message);
-                      }}
-                    >
-                      Cancel
-                    </button>
+                    <div className='edit-box'>
+                      <div>
+                        <textarea
+                          ref={currentEditText}
+                          defaultValue={x.message}
+                        />
+                      </div>
+                      <div className='edit-btns mgl'>
+                        <button className='btn-small' type='submit'>
+                          Submit Changes
+                        </button>
+                        <div
+                          className='cancel-edit mgt'
+                          onClick={() => {
+                            cancel(x.message);
+                          }}
+                        >
+                          Cancel
+                        </div>
+                      </div>
+                    </div>
                   </form>
                 ) : (
-                  <div>{x.message}</div>
+                  <div className='msg'>{x.message}</div>
                 )}
 
                 {user.userInfo && x.likes.indexOf(user.userInfo!._id) !== -1 ? (
-                  <div>I like</div>
+                  <div>
+                    <img src={likeImg} alt='like' />
+                  </div>
                 ) : (
-                  <div>I dont like</div>
+                  <div>
+                    <img src={noLikeImg} alt='no like' />
+                  </div>
                 )}
-                <button onClick={like} id={x._id}>
-                  Likes {x.likes.length}
-                </button>
-                {user.userInfo && x.user._id === user.userInfo!._id && (
-                  <button onClick={deleteMessage} id={x._id}>
-                    Delete
-                  </button>
-                )}
-                {user.userInfo && x.user._id === user.userInfo!._id && (
-                  <button
-                    onClick={(e) => {
-                      editMessage(e, x.message);
-                    }}
-                    id={x._id}
-                  >
-                    Edit
-                  </button>
-                )}
+                <div className='msg-btns'>
+                  <div className='like-btn'>
+                    <button className='btn-small' onClick={like} id={x._id}>
+                      Likes {x.likes.length}
+                    </button>
+                  </div>
+                  {user.userInfo && x.user._id === user.userInfo!._id && (
+                    <div
+                      className='cancel-edit'
+                      onClick={deleteMessage}
+                      id={x._id}
+                    >
+                      Delete
+                    </div>
+                  )}
+                  {user.userInfo && x.user._id === user.userInfo!._id && (
+                    <div
+                      className='cancel-edit mgl'
+                      onClick={(e) => {
+                        editMessage(e, x.message);
+                      }}
+                      id={x._id}
+                    >
+                      Edit
+                    </div>
+                  )}
+                </div>
+                <div className='mgt mgl'>
+                  <span>Comments...</span>
+                </div>
                 <div>
                   {x._id === readmore &&
                     x.comments
@@ -276,16 +307,22 @@ function Messages(props: any) {
                       .reverse()
                       .map((y: any, i: any) => {
                         return (
-                          <div key={uniqid()}>
-                            <img
-                              src={y.user.img}
-                              style={{ height: '50px', width: '50px' }}
-                              alt='hello'
-                            />
-                            <div>
-                              {y.user.firstName} {y.surName}
+                          <div className='msg-border' key={uniqid()}>
+                            <div
+                              id={y.user.id}
+                              onClick={goToProfile}
+                              style={{ cursor: 'pointer' }}
+                            >
+                              <img
+                                className='msg-img'
+                                src={y.user.img}
+                                alt='hello'
+                              />
+                              <span>
+                                {y.user.firstName} {y.surName}
+                              </span>
                             </div>
-                            <div>{y.comment}</div>
+                            <div className='msg'>{y.comment}</div>
                           </div>
                         );
                       })}
@@ -296,16 +333,22 @@ function Messages(props: any) {
                       .slice(0, 3)
                       .map((y: any, i: any) => {
                         return (
-                          <div key={uniqid()}>
-                            <img
-                              src={y.user.img}
-                              style={{ height: '50px', width: '50px' }}
-                              alt='hello'
-                            />
-                            <div>
-                              {y.user.firstName} {y.surName}
+                          <div className='msg-border' key={uniqid()}>
+                            <div
+                              id={y.user.id}
+                              onClick={goToProfile}
+                              style={{ cursor: 'pointer' }}
+                            >
+                              <img
+                                className='msg-img'
+                                src={y.user.img}
+                                alt='hello'
+                              />
+                              <span>
+                                {y.user.firstName} {y.surName}
+                              </span>
                             </div>
-                            <div>{y.comment}</div>
+                            <div className='msg'>{y.comment}</div>
                           </div>
                         );
                       })}
@@ -317,18 +360,34 @@ function Messages(props: any) {
                           : setReadmore(x._id);
                       }}
                     >
-                      Read more...
+                      {x._id !== readmore ? (
+                        <span style={{ cursor: 'pointer' }} className='mgl'>
+                          Read more...
+                        </span>
+                      ) : (
+                        <span style={{ cursor: 'pointer' }} className='mgl'>
+                          Read less...
+                        </span>
+                      )}
                     </div>
                   )}
                 </div>
                 {
-                  <form id={x._id} action='submit' onSubmit={addComment}>
-                    <input
-                      type='text'
+                  <form
+                    className='mgt mgl'
+                    id={x._id}
+                    action='submit'
+                    onSubmit={addComment}
+                  >
+                    <textarea
                       onChange={(e) => updateComment(e, x._id)}
                       placeholder='Comment...'
                     />
-                    <button type='submit'>Submit Comment</button>
+                    <div>
+                      <button className='btn-small mg4' type='submit'>
+                        Submit Comment
+                      </button>
+                    </div>
                   </form>
                 }
               </div>
@@ -342,13 +401,12 @@ function Messages(props: any) {
 
   return (
     <div>
-      {user.userInfo && (
-        <div>
-          {user.userInfo!.firstName} {user.userInfo!.surName}
-        </div>
-      )}
-      <form action='submit' onSubmit={postMessage}>
-        <input type='text' placeholder="What's on your mind?" name='message' />
+      <form
+        className='centering msg-form'
+        action='submit'
+        onSubmit={postMessage}
+      >
+        <textarea placeholder="What's on your mind?" name='message' />
         <button type='submit'>Post message</button>
       </form>
       {messages && renderMessages()}

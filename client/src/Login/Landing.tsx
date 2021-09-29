@@ -33,38 +33,50 @@ function Landing(props: any) {
 
   return (
     <div>
+      <h1>Friends Base</h1>
       <div className='welcome-container'>
-        <h1>Friends Base</h1>
-        <p>
-          Stay connected with your friends on Friends Base. Share photos, videos
-          and much more.
-        </p>
-      </div>
-      <div className='auth-options'>
-        <form action='submit' onSubmit={initLogin}>
-          <input
-            type='text'
-            placeholder='E-Mail address'
-            name='email'
-            required
-          />
-          <input
-            type='password'
-            placeholder='Password'
-            name='password'
-            required
-          />
-          <button type='submit' name='submit'>
-            Log in
-          </button>
-        </form>
-        <div>
-          <p>or</p>
-          <button onClick={goToSignup}>Create new Account</button>
-          <a href='http://localhost:5000/auth/login/facebook'>Facebook</a>
+        <div className='welcome-text'>
+          <p>
+            Stay connected with your friends on Friends Base. Share photos,
+            videos and much more.
+          </p>
         </div>
       </div>
-      {errorMessage && <div>{errorMessage}</div>}
+      <div className='form-container'>
+        <form action='submit' onSubmit={initLogin}>
+          <div>
+            <input
+              type='text'
+              placeholder='E-Mail address'
+              name='email'
+              required
+            />
+          </div>
+          <div>
+            <input
+              type='password'
+              placeholder='Password'
+              name='password'
+              required
+            />
+          </div>
+          <div className='btn-container'>
+            <button className='btn-dark vwWidth1' type='submit' name='submit'>
+              Log in
+            </button>
+          </div>
+        </form>
+        <p>or</p>
+        <div className='signup-container'>
+          <button className='btn-light vwWidth2' onClick={goToSignup}>
+            Create new Account
+          </button>
+          <a href='http://localhost:5000/auth/login/facebook'>
+            Login via Facebook
+          </a>
+        </div>
+        {errorMessage && <div className='error'>{errorMessage}</div>}
+      </div>
     </div>
   );
 }

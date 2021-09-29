@@ -11,8 +11,10 @@ function Logout(props: any) {
     return props.fetchLoginStatus();
   };
   return (
-    <div>
-      <button onClick={logout}>Logout</button>
+    <div className='logout'>
+      <button className='btn-dark' onClick={logout}>
+        Logout
+      </button>
     </div>
   );
 }

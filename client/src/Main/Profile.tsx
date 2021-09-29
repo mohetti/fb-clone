@@ -22,19 +22,21 @@ function Profile(props: any) {
 
   return (
     <div>
+      <h2 className='mg3'>Profile</h2>
       <Navbar />
-      <div>Profile</div>
       {user.userInfo && (
         <div>
-          <div>
-            {user.userInfo.firstName} {user.userInfo.surName}
+          <div className='mg5'>
+            <img
+              className='profile-img'
+              src={'http://localhost:3000/' + user.userInfo!.img}
+              alt='hello'
+            ></img>
+            <span className='mgl'>
+              {user.userInfo.firstName} {user.userInfo.surName}
+            </span>
           </div>
-          <div>{user.userInfo.bio}</div>
-          <img
-            style={{ height: '200px', width: '200px' }}
-            src={'http://localhost:3000/' + user.userInfo!.img}
-            alt='hello'
-          ></img>
+          <div className='bio'>{user.userInfo.bio}</div>
         </div>
       )}
       <Messages rerender={rerender} callRerender={callRerender} />

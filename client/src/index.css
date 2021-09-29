@@ -1,5 +1,22 @@
+:root {
+  --main-bg-color: #521ce6;
+  --light-txt-color: white;
+  --main-txt-color: rgb(49, 49, 49);
+}
+
 html {
   font-family: sans-serif;
+  background-color: rgba(245, 245, 245, 0.596);
+  box-sizing: border-box;
+  color: var(--main-txt-color);
+}
+
+html:before {
+  box-sizing: inherit;
+}
+
+html:after {
+  box-sizing: inherit;
 }
 
 body {
@@ -7,7 +24,522 @@ body {
   padding: 0;
 }
 
-.nav {
-  display: flex;
-  flex-direction: column;
+@media screen and (max-width: 749px) {
+  p {
+    width: 60vw;
+    color: var(--main-txt-color);
+    text-align: center;
+  }
+
+  h1 {
+    background-color: var(--main-bg-color);
+    color: white;
+    text-align: center;
+    margin: 10% 0 15% 0;
+    padding: 5% 0;
+  }
+
+  h2 {
+    background-color: var(--main-bg-color);
+    color: white;
+    text-align: center;
+    margin: 10% 0 15% 0;
+    padding: 5% 0;
+  }
+
+  .mg1 {
+    margin: 5% 0 5% 0;
+  }
+
+  .mg2 {
+    margin: 5% 0 10% 0;
+  }
+
+  .mg3 {
+    margin: 10% 0 2% 0;
+  }
+
+  .mg4 {
+    margin: 2% 0 2% 0;
+  }
+
+  .mg5 {
+    margin: 5% 2.5% 5% 5%;
+  }
+
+  .mgl {
+    margin-left: 2%;
+  }
+
+  .mgt {
+    margin-top: 5%;
+  }
+
+  .mobile-menu {
+    position: relative;
+  }
+
+  .mobile-menu div {
+    display: flex;
+    flex-direction: column;
+    margin-top: 5%;
+  }
+
+  .vwWidth1 {
+    width: 40vw;
+  }
+
+  .vwWidth2 {
+    width: 80vw;
+  }
+
+  .error {
+    text-align: center;
+    margin-top: 10%;
+    color: red;
+  }
+
+  .success {
+    text-align: center;
+    margin: 5% 0;
+    color: green;
+  }
+
+  .btn-dark {
+    background-color: #555555;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+
+  .btn-light {
+    background-color: #e7e7e7;
+    border: none;
+    color: #555555;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 10px;
+    cursor: pointer;
+    margin: 5% 0 10% 0;
+  }
+  .btn-small {
+    background-color: #e7e7e7;
+    border: none;
+    color: #555555;
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+
+  .centering {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .logout {
+    position: relative;
+    margin-top: 10%;
+  }
+
+  .light-border {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid rgba(211, 211, 211, 0.726);
+    border-radius: 10px;
+    margin: 2.5% 2.5%;
+  }
+
+  .msg-border {
+    border: 1px solid rgba(211, 211, 211, 0.726);
+    border-radius: 10px;
+    margin: 3% 3%;
+  }
+
+  .friends-list {
+    display: flex;
+    width: 100%;
+  }
+
+  .friends-list div {
+    margin: 2% 2%;
+    font-size: 10px;
+    flex: 1 1 auto;
+    text-align: center;
+  }
+
+  .friends-list img {
+    height: 40px;
+    width: 40px;
+    border-radius: 20px;
+  }
+
+  .friends-list button {
+    background-color: #e7e7e7;
+    border: none;
+    color: #555555;
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+
+  .msg-form {
+    margin: 2% 0;
+  }
+
+  .msg-form textarea {
+    margin-bottom: 2%;
+    width: 60vw;
+    height: 10vh;
+  }
+
+  .msg-form button {
+    background-color: #e7e7e7;
+    border: none;
+    color: #555555;
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+
+  .msg-container img {
+    height: 30px;
+    width: 30px;
+    border-radius: 30px;
+    margin: 2%;
+    vertical-align: middle;
+  }
+
+  .msg-container span {
+    font-size: 10px;
+    color: gray;
+  }
+
+  .edit-btns {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .edit-box {
+    display: flex;
+  }
+
+  .cancel-edit {
+    font-size: 10px;
+    color: gray;
+    cursor: pointer;
+  }
+
+  .msg {
+    margin: 5% 2% 5% 5%;
+  }
+
+  .msg-btns {
+    display: flex;
+    margin: 0 2%;
+  }
+
+  .like-btn {
+    flex: 1 1 auto;
+  }
+
+  .msg-img {
+    height: 15px;
+    width: 15px;
+    border-radius: 15px;
+    margin: 2%;
+    vertical-align: middle;
+  }
+
+  .profile-img {
+    height: 150px;
+    width: 150px;
+    border-radius: 150px;
+    vertical-align: middle;
+  }
+
+  .bio {
+    border: 1px solid rgba(211, 211, 211, 0.726);
+    border-radius: 10px;
+    margin: 3% 3% 7% 3%;
+    padding: 5% 5%;
+    text-align: center;
+  }
+}
+
+@media screen and (min-width: 750px) {
+  p {
+    width: 60vw;
+    color: var(--main-txt-color);
+    text-align: center;
+  }
+
+  h1 {
+    background-color: var(--main-bg-color);
+    color: white;
+    text-align: center;
+    padding: 2% 0 0 0;
+    margin: 2% 0 2% 0;
+    height: 10vh;
+  }
+
+  h2 {
+    background-color: var(--main-bg-color);
+    color: white;
+    text-align: center;
+    padding: 2% 0 0 0;
+    margin: 2% 0 2% 0;
+    height: 10vh;
+  }
+
+  .mg1 {
+    margin: 5% 0 5% 0;
+  }
+
+  .mg2 {
+    margin: 5% 0 10% 0;
+  }
+
+  .mg4 {
+    margin: 2% 0 2% 0;
+  }
+
+  .mg5 {
+    margin: 5% 2.5% 5% 5%;
+  }
+
+  .mgl {
+    margin-left: 2%;
+  }
+
+  .mgt {
+    margin-top: 5%;
+  }
+
+  .mobile-menu {
+    position: relative;
+  }
+
+  .mobile-menu div {
+    display: flex;
+    flex-direction: column;
+    margin-top: 5%;
+  }
+
+  .error {
+    text-align: center;
+    margin-top: 10%;
+    color: red;
+  }
+
+  .success {
+    text-align: center;
+    margin: 5% 0;
+    color: green;
+  }
+
+  .btn-dark {
+    background-color: #555555;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+
+  .btn-light {
+    background-color: #e7e7e7;
+    border: none;
+    color: #555555;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 10px;
+    cursor: pointer;
+    margin: 5% 0 10% 0;
+  }
+  .btn-small {
+    background-color: #e7e7e7;
+    border: none;
+    color: #555555;
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+
+  .centering {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .logout {
+    position: relative;
+    margin-top: 10%;
+  }
+
+  .light-border {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid rgba(211, 211, 211, 0.726);
+    border-radius: 10px;
+    margin: 2.5% 2.5%;
+  }
+
+  .msg-border {
+    border: 1px solid rgba(211, 211, 211, 0.726);
+    border-radius: 10px;
+    margin: 2% 15% 5% 15%;
+  }
+
+  .friends-list {
+    display: flex;
+    width: 100%;
+  }
+
+  .friends-list div {
+    margin: 2% 2%;
+    font-size: 12px;
+    flex: 1 1 auto;
+    text-align: center;
+  }
+
+  .friends-list img {
+    height: 80px;
+    width: 80px;
+    border-radius: 40px;
+  }
+
+  .friends-list button {
+    background-color: #e7e7e7;
+    border: none;
+    color: #555555;
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+
+  .msg-form {
+    margin: 2% 0;
+  }
+
+  .msg-form textarea {
+    margin-bottom: 2%;
+    width: 60vw;
+    height: 10vh;
+  }
+
+  .msg-form button {
+    background-color: #e7e7e7;
+    border: none;
+    color: #555555;
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+
+  .msg-container img {
+    height: 80px;
+    width: 80px;
+    border-radius: 40px;
+    margin: 2%;
+    vertical-align: middle;
+  }
+
+  .msg-container span {
+    font-size: 12px;
+    color: gray;
+  }
+
+  .edit-btns {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .edit-box {
+    display: flex;
+  }
+
+  .cancel-edit {
+    font-size: 10px;
+    color: gray;
+    cursor: pointer;
+  }
+
+  .msg {
+    margin: 5% 2% 5% 5%;
+  }
+
+  .msg-btns {
+    display: flex;
+    margin: 0 2%;
+  }
+
+  .like-btn {
+    flex: 1 1 auto;
+  }
+
+  .msg-img {
+    height: 15px;
+    width: 15px;
+    border-radius: 15px;
+    margin: 2%;
+    vertical-align: middle;
+  }
+
+  .profile-img {
+    height: 150px;
+    width: 150px;
+    border-radius: 150px;
+    vertical-align: middle;
+  }
+
+  .bio {
+    border: 1px solid rgba(211, 211, 211, 0.726);
+    border-radius: 10px;
+    margin: 3% 3% 7% 3%;
+    padding: 5% 5%;
+    text-align: center;
+  }
 }

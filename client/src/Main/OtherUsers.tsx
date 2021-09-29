@@ -1,4 +1,5 @@
 import React, { useRef, useEffect, useState, useContext } from 'react';
+import { useHistory } from 'react-router';
 import { useParams } from 'react-router-dom';
 import { CSRFContext } from '../Authentication/csrfContext';
 import { UserContext } from '../Authentication/userContext';
@@ -8,6 +9,9 @@ import moment from 'moment';
 import Navbar from '../SideComponents/Navbar';
 import Logout from '../SideComponents/Logout';
 
+import likeImg from '../imgs/like.png';
+import noLikeImg from '../imgs/no-like.png';
+
 function OtherUsers(props: any) {
   const [user, setUser] = useState<any>(undefined);
   const [messages, setMessages] = useState<any>(undefined);
@@ -16,6 +20,7 @@ function OtherUsers(props: any) {
   const [loading, setLoading] = useState(true);
   const currentUser = useContext(UserContext);
   const comments = useRef<any>({});
+  const history = useHistory();
 
   const [readmore, setReadmore] = useState<any>('');
 
@@ -33,7 +38,6 @@ function OtherUsers(props: any) {
       body: data,
     });
     const response = await fetchData.json();
-    console.log(response);
 
     setUser(response.docs);
   };
@@ -130,45 +134,69 @@ function OtherUsers(props: any) {
     comments.current = { ...comments.current, [msgId]: target.value };
   };
 
+  const goToProfile = (e: React.SyntheticEvent) => {
+    const target = e.currentTarget as HTMLElement;
+    target.id === currentUser.userInfo._id
+      ? history.push(`/profile`)
+      : history.push(`/profile/${target.id}`);
+    setLoading(true);
+  };
+
   // if id === logged in user redirect to /profile
   return (
     <div>
+      <div className='mg3'></div>
       <Navbar />
       {user && (
         <div>
-          <div>
+          <div className='mg5'>
             <img
-              style={{ height: '50px', width: '50px' }}
+              className='profile-img'
               src={'http://localhost:3000/' + user.img}
               alt='profile'
             />
-            {user.firstName} {user.surName}
-            {user.bio}
+            <span className='mgl'>
+              {user.firstName} {user.surName}
+            </span>
           </div>
+          <div className='bio'>{user.bio}</div>
           {messages && (
-            <div>
+            <div
+              className='msg-container'
+              style={{ height: '500px', overflowY: 'auto' }}
+            >
               {messages.map((x: any) => {
                 return (
-                  <div key={uniqid()}>
-                    <div>
-                      <div>
-                        {x.user.firstName} {x.user.surName}
-                      </div>
+                  <div className='msg-border' key={uniqid()}>
+                    <div
+                      id={x.user._id}
+                      onClick={goToProfile}
+                      style={{ cursor: 'pointer' }}
+                    >
                       <img
                         src={'http://localhost:3000/' + x.user.img}
-                        style={{ height: '50px', width: '50px' }}
                         alt='hello'
                       />
-                      <div>{formatDate(x)}</div>
-                      <div>{x.message}</div>
+                      <span>
+                        {x.user.firstName} {x.user.surName}
+                      </span>
                     </div>
-                    {user.userInfo &&
+
+                    <div>
+                      <span className='mgl'>{formatDate(x)}</span>
+                    </div>
+                    <div className='msg'>{x.message}</div>
+                    {currentUser.userInfo &&
                     x.likes.indexOf(currentUser.userInfo._id) !== -1 ? (
-                      <div>I like</div>
+                      <div>
+                        <img src={likeImg} alt='like' />
+                      </div>
                     ) : (
-                      <div>I dont like</div>
+                      <div>
+                        <img src={noLikeImg} alt='no like' />
+                      </div>
                     )}
-                    <button onClick={like} id={x._id}>
+                    <button className='btn-small' onClick={like} id={x._id}>
                       Likes {x.likes.length}
                     </button>
                     <div>
@@ -178,16 +206,22 @@ function OtherUsers(props: any) {
                           .reverse()
                           .map((y: any, i: any) => {
                             return (
-                              <div key={uniqid()}>
-                                <img
-                                  src={'http://localhost:3000/' + y.user.img}
-                                  style={{ height: '50px', width: '50px' }}
-                                  alt='hello'
-                                />
-                                <div>
-                                  {y.user.firstName} {y.surName}
+                              <div className='msg-border' key={uniqid()}>
+                                <div
+                                  id={y.user.id}
+                                  onClick={goToProfile}
+                                  style={{ cursor: 'pointer' }}
+                                >
+                                  <img
+                                    className='msg-img'
+                                    src={'http://localhost:3000/' + y.user.img}
+                                    alt='hello'
+                                  />
+                                  <span>
+                                    {y.user.firstName} {y.surName}
+                                  </span>
                                 </div>
-                                <div>{y.comment}</div>
+                                <div className='msg'>{y.comment}</div>
                               </div>
                             );
                           })}
@@ -198,16 +232,22 @@ function OtherUsers(props: any) {
                           .slice(0, 3)
                           .map((y: any, i: any) => {
                             return (
-                              <div key={uniqid()}>
-                                <img
-                                  src={'http://localhost:3000/' + y.user.img}
-                                  style={{ height: '50px', width: '50px' }}
-                                  alt='hello'
-                                />
-                                <div>
-                                  {y.user.firstName} {y.surName}
+                              <div className='msg-border' key={uniqid()}>
+                                <div
+                                  id={y.user.id}
+                                  onClick={goToProfile}
+                                  style={{ cursor: 'pointer' }}
+                                >
+                                  <img
+                                    src={'http://localhost:3000/' + y.user.img}
+                                    className='msg-img'
+                                    alt='hello'
+                                  />
+                                  <span>
+                                    {y.user.firstName} {y.surName}
+                                  </span>
                                 </div>
-                                <div>{y.comment}</div>
+                                <div className='msg'>{y.comment}</div>
                               </div>
                             );
                           })}
@@ -219,18 +259,34 @@ function OtherUsers(props: any) {
                               : setReadmore(x._id);
                           }}
                         >
-                          Read more...
+                          {x._id !== readmore ? (
+                            <span style={{ cursor: 'pointer' }} className='mgl'>
+                              Read more...
+                            </span>
+                          ) : (
+                            <span style={{ cursor: 'pointer' }} className='mgl'>
+                              Read less...
+                            </span>
+                          )}
                         </div>
                       )}
                     </div>
                     {
-                      <form id={x._id} action='submit' onSubmit={addComment}>
-                        <input
-                          type='text'
+                      <form
+                        className='mgt mgl'
+                        id={x._id}
+                        action='submit'
+                        onSubmit={addComment}
+                      >
+                        <textarea
                           onChange={(e) => updateComment(e, x._id)}
                           placeholder='Comment...'
                         />
-                        <button type='submit'>Submit Comment</button>
+                        <div>
+                          <button className='btn-small mg4' type='submit'>
+                            Submit Comment
+                          </button>
+                        </div>
                       </form>
                     }
                   </div>

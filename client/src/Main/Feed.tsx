@@ -4,20 +4,6 @@ import Messages from './Messages';
 import { useEffect, useState, useContext } from 'react';
 import { UserContext } from '../Authentication/userContext';
 import { CSRFContext } from '../Authentication/csrfContext';
-/*
-type ResponseSchema = {
-  _id: string;
-  message: string;
-  time: string;
-  comments: [string];
-  likes: [string];
-  user: {
-    firstName: string;
-    surName: string;
-    _id: string;
-  };
-};
-*/
 
 function Feed(props: any) {
   const [rerender, setRerender] = useState(true);
@@ -29,7 +15,6 @@ function Feed(props: any) {
   const [success, setSuccess] = useState(false);
 
   useEffect(() => {
-    console.log(user);
     if (rerender) {
       setRerender(false);
     }
@@ -105,27 +90,49 @@ function Feed(props: any) {
     <div>
       {user.userInfo && user.userInfo.firstLogin ? (
         <div>
-          <h1>Welcome to Friends Base!</h1>
-          <p>
-            If you'd like, upload an image and write a short bio about yourself.
-          </p>
-          <p>
-            if you don't have time, you can do this at any time under Settings.
-          </p>
-          <p>Have fun!</p>
-          <form onSubmit={uploadImage}>
+          <h2>Welcome to Friends Base!</h2>
+          <div className='centering'>
+            <p>
+              If you'd like, upload an image and write a short bio about
+              yourself.
+            </p>
+            <p>
+              if you don't have time, you can do this at any time under
+              Settings.
+            </p>
+            <p>Have fun!</p>
+          </div>
+          <form className='centering mg1' onSubmit={uploadImage}>
             <input name='image' type='file' onChange={onFileChange} />
-            <input type='submit' />
+            <input
+              className='btn-light mg1'
+              type='submit'
+              value='Uploade Picture'
+            />
           </form>
-          <form onSubmit={addBio}>
-            <input name='bio' type='text' onChange={bioText} value={bio} />
-            <input type='submit' value='Add Bio' />
+          <form className='centering' onSubmit={addBio}>
+            <textarea
+              className='textarea'
+              name='bio'
+              onChange={bioText}
+              value={bio}
+            />
+            <input className='btn-light mg1' type='submit' value='Add Bio' />
           </form>
-          {success && <div>Bio successfully updated</div>}
-          <button onClick={proceed}>Proceed</button>
+          {success && (
+            <div className='centering'>
+              <div className='success'>Bio successfully updated</div>
+            </div>
+          )}
+          <div className='centering'>
+            <button className='btn-dark' onClick={proceed}>
+              Proceed
+            </button>
+          </div>
         </div>
       ) : (
         <div>
+          <h2 className='mg3'>Feed</h2>
           <Navbar />
           <Messages rerender={rerender} callRerender={callRerender} />
           <Logout fetchLoginStatus={props.fetchLoginStatus} />

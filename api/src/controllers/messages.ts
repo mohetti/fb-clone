@@ -36,7 +36,6 @@ export const updateMessage: RequestHandler = (req, res, next) => {
 
 export const getMessages: RequestHandler = (req, res, next) => {
   const skip = +req.query.count!;
-  console.log(skip);
 
   User.findOne({ _id: req.session.user!._id }).then((response: any) => {
     const messageHolders = Array.from(response.friends);
@@ -89,6 +88,7 @@ export const addComment: RequestHandler = (req, res, next) => {
       firstName: req.session.user?.firstName,
       surName: req.session.user?.surName,
       img: req.session.user?.img,
+      id: req.session.user?._id,
     },
     comment: req.body.msg,
   };
@@ -99,7 +99,6 @@ export const addComment: RequestHandler = (req, res, next) => {
     { $push: { comments: comment } },
     { new: true }
   ).then((response) => {
-    console.log(response);
     return res.json({ status: 200, docs: response });
   });
 };

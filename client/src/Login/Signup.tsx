@@ -53,41 +53,74 @@ function Signup() {
 
   return (
     <div>
-      <div className='login-container'>
-        <h1>Signup to Friends Base</h1>
-        <form action='submit' onSubmit={signupUser}>
-          <label htmlFor='firstname'>First name: </label>
-          <input type='string' name='firstname' placeholder='Name' required />
-          <label htmlFor='surname'>First name: </label>
-          <input type='string' name='surname' placeholder='Surname' required />
-          <label htmlFor='email'>E-Mail: </label>
-          <input
-            type='text'
-            placeholder='E-Mail address'
-            name='email'
-            required
-          />
-          <label htmlFor='password'>Password: </label>
-          <input
-            type='password'
-            placeholder='Password'
-            name='password'
-            required
-          />
-          <label htmlFor='confirmPassword'>Confirm Password: </label>
-          <input
-            type='password'
-            placeholder='Confirm password'
-            name='confirmPassword'
-            required
-          />
-          <button type='submit' name='submit'>
-            Sign up
-          </button>
-        </form>
+      <h1>Signup to Friends Base</h1>
+      <div className='welcome-container'>
+        <div className='form-container'>
+          <form action='submit' onSubmit={signupUser}>
+            <label className='input-w' htmlFor='firstname'>
+              <span className='label'>First name: </span>
+              <input
+                className='input'
+                type='string'
+                name='firstname'
+                placeholder='Name'
+                required
+              />
+            </label>
+            <label className='input-w' htmlFor='surname'>
+              <span className='label'>First name: </span>
+              <input
+                className='input'
+                type='string'
+                name='surname'
+                placeholder='Surname'
+                required
+              />
+            </label>
+            <label className='input-w' htmlFor='email'>
+              <span className='label'>E-Mail: </span>
+              <input
+                className='input'
+                type='text'
+                placeholder='E-Mail address'
+                name='email'
+                required
+              />
+            </label>
+            <label className='input-w' htmlFor='password'>
+              <span className='label'>Password: </span>
+              <input
+                className='input'
+                type='password'
+                placeholder='Password'
+                name='password'
+                required
+              />
+            </label>
+            <label className='input-w' htmlFor='confirmPassword'>
+              <span className='label'>Confirm Password: </span>
+              <input
+                className='input'
+                type='password'
+                placeholder='Confirm password'
+                name='confirmPassword'
+                required
+              />
+            </label>
+            <div className='btn-container'>
+              <button className='btn-dark' type='submit' name='submit'>
+                Sign up
+              </button>
+            </div>
+          </form>
+        </div>
         <div>
-          <p>Already have an Account</p>
-          <button onClick={goToLogin}>Login</button>
+          <p>Already have an Account?</p>
+          <div className='btn-container'>
+            <button className='btn-light' onClick={goToLogin}>
+              Login
+            </button>
+          </div>
         </div>
       </div>
       {errorMsg && <div>{errorMsg}</div>}

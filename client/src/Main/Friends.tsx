@@ -132,18 +132,21 @@ function Friends(props: any) {
 
   const renderUsers = (userList: any, source: any) => {
     return (
-      <div>
+      <div className='friends-list'>
         {userList.map((x: any) => {
           return (
             <div key={uniqid()}>
-              <div>{x.firstName}</div>
+              <img src={'http://localhost:3000/' + x.img} alt='friend' />
+              <div>
+                {x.firstName} {x.surName}
+              </div>
               {source === 'suggestion' && (
                 <button
                   onClick={() => {
                     addFriend(x._id);
                   }}
                 >
-                  Add friend
+                  Add
                 </button>
               )}
               {source === 'accept' && (
@@ -152,7 +155,7 @@ function Friends(props: any) {
                     acceptFriend(x._id);
                   }}
                 >
-                  Accept Friend
+                  Accept
                 </button>
               )}
               {source === 'friends' && (
@@ -161,7 +164,7 @@ function Friends(props: any) {
                     deleteFriend(x._id);
                   }}
                 >
-                  Delete Friend
+                  Delete
                 </button>
               )}
               {source === 'wait' && (
@@ -170,7 +173,7 @@ function Friends(props: any) {
                     deleteRequest(x._id);
                   }}
                 >
-                  Delete Request
+                  Delete
                 </button>
               )}
             </div>
@@ -182,15 +185,24 @@ function Friends(props: any) {
 
   return (
     <div>
+      <h2 className='mg3'>Friends</h2>
       <Navbar />
-      <div>**************ANSWER REQ*****************</div>
-      {answerFriendRequest && renderUsers(answerFriendRequest, 'accept')}
-      <div>**************FRIENDS**********</div>
-      {friends && renderUsers(friends, 'friends')}
-      <div>*****************SUGGESTIONS*************</div>
-      {friendsSuggestions && renderUsers(friendsSuggestions, 'suggestion')}
-      <div>**************WAIT**************</div>
-      {waitForResponse && renderUsers(waitForResponse, 'wait')}
+      <div className='light-border'>
+        <h3>Answer Requests</h3>
+        {answerFriendRequest && renderUsers(answerFriendRequest, 'accept')}
+      </div>
+      <div className='light-border'>
+        <h3>Friends</h3>
+        {friends && renderUsers(friends, 'friends')}
+      </div>
+      <div className='light-border'>
+        <h3>Suggestions</h3>
+        {friendsSuggestions && renderUsers(friendsSuggestions, 'suggestion')}
+      </div>
+      <div className='light-border'>
+        <h3>Await Response</h3>
+        {waitForResponse && renderUsers(waitForResponse, 'wait')}
+      </div>
       <Logout fetchLoginStatus={props.fetchLoginStatus} />
     </div>
   );

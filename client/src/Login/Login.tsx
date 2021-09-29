@@ -49,33 +49,46 @@ function Login(props: any) {
 
   return (
     <div>
-      <div className='login-container'>
-        <h1>Login to Friends Base</h1>
-        <form action='submit' onSubmit={initLogin}>
-          <input
-            type='text'
-            placeholder='E-Mail address'
-            name='email'
-            required
-          />
-          <input
-            type='password'
-            placeholder='Password'
-            name='password'
-            required
-          />
-          <button type='submit' name='submit'>
-            Log in
-          </button>
-        </form>
+      <h1>Login to Friends Base</h1>
+      <div className='welcome-container'>
+        <div className='form-container'>
+          <form action='submit' onSubmit={initLogin}>
+            <div>
+              <input
+                type='text'
+                placeholder='E-Mail address'
+                name='email'
+                required
+              />
+            </div>
+            <div>
+              <input
+                type='password'
+                placeholder='Password'
+                name='password'
+                required
+              />
+            </div>
+            <div className='btn-container'>
+              <button className='btn-dark' type='submit' name='submit'>
+                Log in
+              </button>
+            </div>
+          </form>
+        </div>
         <div>
           <p>No Account?</p>
-          <button onClick={goToSignup}>Create new Account</button>
+          <div className='signup-container'>
+            <button className='btn-light' onClick={goToSignup}>
+              Create new Account
+            </button>
+          </div>
         </div>
+        <a href='http://localhost:5000/auth/login/facebook'>Facebook</a>
       </div>
-      <a href='http://localhost:5000/auth/login/facebook'>Facebook</a>
-      {errorMessage && <div>{errorMessage}</div>}
-      {redirectMessage && <div>{redirectMessage}</div>}
+
+      {errorMessage && <div className='error'>{errorMessage}</div>}
+      {redirectMessage && <div className='success'>{redirectMessage}</div>}
     </div>
   );
 }

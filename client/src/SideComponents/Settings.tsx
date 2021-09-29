@@ -91,18 +91,26 @@ function Settings(props: any) {
   };
   return (
     <div>
+      <h2 className='mg3'>Settings</h2>
       <Navbar />
-      <div>Settings</div>
-      <button onClick={confirmDeletion}>Delete Profile</button>
-      <form onSubmit={uploadImage}>
+      <form className='centering mg3' onSubmit={uploadImage}>
         <input name='image' type='file' onChange={onFileChange} />
-        <input type='submit' />
+        <input className='btn-light mg1' type='submit' value='Upload Image' />
       </form>
-      <form onSubmit={addBio}>
-        <input name='bio' type='text' onChange={bioText} value={bio} />
-        <input type='submit' value='Add Bio' />
+      <form className='centering mg3' onSubmit={addBio}>
+        <textarea name='bio' onChange={bioText} value={bio} />
+        <input className='btn-light' type='submit' value='Add Bio' />
       </form>
-      {success && <div>Bio successfully updated</div>}
+      {success && (
+        <div className='success'>
+          <div>Bio successfully updated</div>
+        </div>
+      )}
+      <div className='centering'>
+        <button className='btn-light' onClick={confirmDeletion}>
+          Delete Profile
+        </button>
+      </div>
       <Logout fetchLoginStatus={props.fetchLoginStatus} />
     </div>
   );
