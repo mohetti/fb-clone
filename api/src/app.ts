@@ -11,6 +11,7 @@ import commentsRoutes from './routes/comments';
 import likesRoutes from './routes/likes';
 import User from './models/newUser';
 import { UserInterface } from './interfaces/userInterface';
+import path from 'path';
 
 import * as dotenv from 'dotenv';
 import passport from 'passport';
@@ -89,6 +90,16 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   res.status(500).json({ message: err.message });
 });
 
-app.listen(5000, () => {
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static('client/build'));
+
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+  });
+}
+
+const port = process.env.PORT || 5000;
+
+app.listen(port, () => {
   console.log('Server running');
 });
