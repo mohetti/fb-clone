@@ -14,7 +14,7 @@ function Settings(props: any) {
   const { userInfo, setUserInfo } = useContext(UserContext);
 
   const deleteProfile = async () => {
-    await fetch('http://localhost:3000/user/delete', {
+    await fetch('https://mohetti.github.io/fb-clone/user/delete', {
       method: 'POST',
       mode: 'cors',
       credentials: 'include',
@@ -24,7 +24,7 @@ function Settings(props: any) {
         'xsrf-token': csrf,
       },
     });
-    await fetch('http://localhost:3000/auth/logout', {
+    await fetch('https://mohetti.github.io/fb-clone/auth/logout', {
       method: 'GET',
       mode: 'cors',
       credentials: 'include',
@@ -47,15 +47,18 @@ function Settings(props: any) {
     e.preventDefault();
     const formData = new FormData();
     formData.append('profileImage', selectedFile);
-    const fetchData = await fetch('http://localhost:3000/user/upload', {
-      method: 'POST',
-      body: formData,
-      headers: {
-        Accept: 'multipart/formdata',
-        'xsrf-token': csrf,
-      },
-      credentials: 'include',
-    });
+    const fetchData = await fetch(
+      'https://mohetti.github.io/fb-clone/user/upload',
+      {
+        method: 'POST',
+        body: formData,
+        headers: {
+          Accept: 'multipart/formdata',
+          'xsrf-token': csrf,
+        },
+        credentials: 'include',
+      }
+    );
     const response = await fetchData.json();
     setUserInfo(response.docs);
   };
@@ -67,7 +70,7 @@ function Settings(props: any) {
   };
   const addBio = async (e: React.SyntheticEvent) => {
     e.preventDefault();
-    await fetch('http://localhost:3000/user/bio', {
+    await fetch('https://mohetti.github.io/fb-clone/user/bio', {
       method: 'POST',
       mode: 'cors',
       credentials: 'include',

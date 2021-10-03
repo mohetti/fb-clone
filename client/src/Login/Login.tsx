@@ -84,7 +84,9 @@ function Login(props: any) {
             </button>
           </div>
         </div>
-        <a href='http://localhost:5000/auth/login/facebook'>Facebook</a>
+        <a href='https://base-friends-app.herokuapp.com/auth/login/facebook'>
+          Facebook
+        </a>
       </div>
 
       {errorMessage && <div className='error'>{errorMessage}</div>}

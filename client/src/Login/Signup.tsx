@@ -25,17 +25,20 @@ function Signup() {
       confirmPassword: target.confirmPassword.value,
     };
 
-    const signup = await fetch('http://localhost:3000/auth/signup', {
-      method: 'POST',
-      mode: 'cors',
-      credentials: 'include',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        'xsrf-token': csrf,
-      },
-      body: JSON.stringify(data),
-    });
+    const signup = await fetch(
+      'https://mohetti.github.io/fb-clone/auth/signup',
+      {
+        method: 'POST',
+        mode: 'cors',
+        credentials: 'include',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          'xsrf-token': csrf,
+        },
+        body: JSON.stringify(data),
+      }
+    );
 
     const response = await signup.json();
     if (response.status === 401) {

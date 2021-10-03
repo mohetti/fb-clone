@@ -23,16 +23,19 @@ function Friends(props: any) {
   const { userInfo, setUserInfo } = useContext(UserContext);
 
   const getUsersList = async () => {
-    const fetchData = await fetch('http://localhost:3000/friends/suggestions', {
-      method: 'GET',
-      mode: 'cors',
-      credentials: 'include',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        'xsrf-token': csrf,
-      },
-    });
+    const fetchData = await fetch(
+      'https://mohetti.github.io/fb-clone/friends/suggestions',
+      {
+        method: 'GET',
+        mode: 'cors',
+        credentials: 'include',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          'xsrf-token': csrf,
+        },
+      }
+    );
     const response = await fetchData.json();
     return response.docs;
   };
@@ -67,7 +70,7 @@ function Friends(props: any) {
   }, [rerender]);
 
   const addFriend = async (id: any) => {
-    await fetch('http://localhost:3000/friends/request', {
+    await fetch('https://mohetti.github.io/fb-clone/friends/request', {
       method: 'PUT',
       mode: 'cors',
       credentials: 'include',
@@ -82,24 +85,27 @@ function Friends(props: any) {
   };
 
   const acceptFriend = async (id: any) => {
-    const fetchData = await fetch('http://localhost:3000/friends/response', {
-      method: 'PUT',
-      mode: 'cors',
-      credentials: 'include',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        'xsrf-token': csrf,
-      },
-      body: JSON.stringify({ id: id }),
-    });
+    const fetchData = await fetch(
+      'https://mohetti.github.io/fb-clone/friends/response',
+      {
+        method: 'PUT',
+        mode: 'cors',
+        credentials: 'include',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          'xsrf-token': csrf,
+        },
+        body: JSON.stringify({ id: id }),
+      }
+    );
     const response = await fetchData.json();
     setUserInfo(response.docs);
     return setRerender(true);
   };
 
   const deleteFriend = (id: any) => {
-    fetch('http://localhost:3000/friends/delete', {
+    fetch('https://mohetti.github.io/fb-clone/friends/delete', {
       method: 'PUT',
       mode: 'cors',
       credentials: 'include',
@@ -115,7 +121,7 @@ function Friends(props: any) {
   };
 
   const deleteRequest = (id: any) => {
-    fetch('http://localhost:3000/friends/delete/friendrequest', {
+    fetch('https://mohetti.github.io/fb-clone/friends/delete/friendrequest', {
       method: 'PUT',
       mode: 'cors',
       credentials: 'include',
@@ -136,7 +142,10 @@ function Friends(props: any) {
         {userList.map((x: any) => {
           return (
             <div key={uniqid()}>
-              <img src={'http://localhost:3000/' + x.img} alt='friend' />
+              <img
+                src={'https://mohetti.github.io/fb-clone/' + x.img}
+                alt='friend'
+              />
               <div>
                 {x.firstName} {x.surName}
               </div>

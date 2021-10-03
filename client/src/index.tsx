@@ -29,14 +29,17 @@ const Routing = () => {
   const [userInfo, setUserInfo] = useState(undefined);
   const value = { userInfo, setUserInfo };
   const fetchLoginStatus = async () => {
-    const fetchData = await fetch('http://localhost:3000/auth/checkauth', {
-      method: 'GET',
-      mode: 'cors',
-      credentials: 'include',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
+    const fetchData = await fetch(
+      'https://mohetti.github.io/fb-clone/auth/checkauth',
+      {
+        method: 'GET',
+        mode: 'cors',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    );
     const response = await fetchData.json();
     setUserInfo(response.userInfo);
     return response.status === 401
@@ -45,7 +48,7 @@ const Routing = () => {
   };
 
   async function getToken() {
-    let test = await fetch('http://localhost:3000/token', {
+    let test = await fetch('https://mohetti.github.io/fb-clone/token', {
       headers: {
         method: 'GET',
         Accept: 'application/json',

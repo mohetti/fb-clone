@@ -71,7 +71,7 @@ function Landing(props: any) {
           <button className='btn-light vwWidth2' onClick={goToSignup}>
             Create new Account
           </button>
-          <a href='http://localhost:5000/auth/login/facebook'>
+          <a href='https://base-friends-app.herokuapp.com/auth/login/facebook'>
             Login via Facebook
           </a>
         </div>
