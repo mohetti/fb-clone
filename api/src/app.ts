@@ -18,6 +18,7 @@ import passport from 'passport';
 import * as passportConfig from './util/passport';
 import MongoDBStore from 'connect-mongodb-session';
 import csrf from 'csurf';
+import { Server } from 'http';
 
 export const csrfProtection = csrf({ cookie: true });
 
@@ -74,6 +75,7 @@ const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 db.once('open', function () {
   console.log('connected to mongodb');
+  console.log('does this get printed too');
 });
 
 app.get('/token', csrfProtection, function (req, res) {
@@ -90,16 +92,16 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   res.status(500).json({ message: err.message });
 });
 
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static('client/build'));
+app.use(express.static('client/build'));
 
-  app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
-  });
-}
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+});
 
-const port = process.env.PORT || 5000;
+const port = process.env.PORT;
 
 app.listen(port, () => {
-  console.log('Server running');
+  console.log('listening on port' + port);
 });
+
+let test = 'test';

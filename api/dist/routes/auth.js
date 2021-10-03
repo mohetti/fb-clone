@@ -3,10 +3,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const auth_1 = require("../controllers/auth");
 const router = (0, express_1.Router)();
-// login user
 router.post('/login', auth_1.login);
-// logout user
 router.get('/logout', auth_1.logout);
-// create new user
 router.post('/signup', auth_1.signup);
+router.get('/checkauth', auth_1.checkAuth);
+router.get('/login/facebook', auth_1.loginFb);
+router.get('/login/facebook/callback', auth_1.loginFbCallback);
 exports.default = router;
