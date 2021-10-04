@@ -28,18 +28,15 @@ function Feed(props: any) {
     e.preventDefault();
     const formData = new FormData();
     formData.append('profileImage', selectedFile);
-    const fetchData = await fetch(
-      'https://mohetti.github.io/fb-clone/user/upload',
-      {
-        method: 'POST',
-        body: formData,
-        headers: {
-          Accept: 'multipart/formdata',
-          'xsrf-token': csrf,
-        },
-        credentials: 'include',
-      }
-    );
+    const fetchData = await fetch('https://smc-mh.herokuapp.com/user/upload', {
+      method: 'POST',
+      body: formData,
+      headers: {
+        Accept: 'multipart/formdata',
+        'xsrf-token': csrf,
+      },
+      credentials: 'include',
+    });
     const response = await fetchData.json();
     setUserInfo(response.docs);
   };
@@ -51,7 +48,7 @@ function Feed(props: any) {
   };
   const addBio = async (e: React.SyntheticEvent) => {
     e.preventDefault();
-    await fetch('https://mohetti.github.io/fb-clone/user/bio', {
+    await fetch('https://smc-mh.herokuapp.com/user/bio', {
       method: 'POST',
       mode: 'cors',
       credentials: 'include',
@@ -76,7 +73,7 @@ function Feed(props: any) {
 
   const proceed = async () => {
     const fetchData = await fetch(
-      'https://mohetti.github.io/fb-clone/user/firstlogin',
+      'https://smc-mh.herokuapp.com/user/firstlogin',
       {
         method: 'POST',
         mode: 'cors',

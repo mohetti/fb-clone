@@ -60,7 +60,7 @@ function Messages(props: any) {
     const message = {
       message: target.message.value,
     };
-    await fetch('https://mohetti.github.io/fb-clone/messages/create', {
+    await fetch('https://smc-mh.herokuapp.com/messages/create', {
       method: 'POST',
       mode: 'cors',
       credentials: 'include',
@@ -92,7 +92,7 @@ function Messages(props: any) {
   const like = async (e: React.SyntheticEvent) => {
     const target = e.target as HTMLInputElement;
 
-    await fetch('https://mohetti.github.io/fb-clone/likes/messages', {
+    await fetch('https://smc-mh.herokuapp.com/likes/messages', {
       method: 'PUT',
       mode: 'cors',
       credentials: 'include',
@@ -110,7 +110,7 @@ function Messages(props: any) {
   const deleteMessage = async (e: React.SyntheticEvent) => {
     const target = e.target as HTMLInputElement;
 
-    await fetch('https://mohetti.github.io/fb-clone/messages/delete', {
+    await fetch('https://smc-mh.herokuapp.com/messages/delete', {
       method: 'PUT',
       mode: 'cors',
       credentials: 'include',
@@ -144,7 +144,7 @@ function Messages(props: any) {
       message: currentEditText.current.value,
       id: id,
     });
-    await fetch('https://mohetti.github.io/fb-clone/messages/edit', {
+    await fetch('https://smc-mh.herokuapp.com/messages/edit', {
       method: 'PUT',
       mode: 'cors',
       credentials: 'include',
@@ -173,7 +173,7 @@ function Messages(props: any) {
       msg: comments.current[target.id],
     });
 
-    await fetch('https://mohetti.github.io/fb-clone/messages/comment', {
+    await fetch('https://smc-mh.herokuapp.com/messages/comment', {
       method: 'PUT',
       mode: 'cors',
       credentials: 'include',

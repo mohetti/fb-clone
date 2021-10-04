@@ -1,6 +1,6 @@
 function Logout(props: any) {
   const logout = async () => {
-    await fetch('https://mohetti.github.io/fb-clone/auth/logout', {
+    await fetch('https://smc-mh.herokuapp.com/auth/logout', {
       method: 'GET',
       mode: 'cors',
       credentials: 'include',

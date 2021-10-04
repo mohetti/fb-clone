@@ -24,7 +24,7 @@ function Friends(props: any) {
 
   const getUsersList = async () => {
     const fetchData = await fetch(
-      'https://mohetti.github.io/fb-clone/friends/suggestions',
+      'https://smc-mh.herokuapp.com/friends/suggestions',
       {
         method: 'GET',
         mode: 'cors',
@@ -70,7 +70,7 @@ function Friends(props: any) {
   }, [rerender]);
 
   const addFriend = async (id: any) => {
-    await fetch('https://mohetti.github.io/fb-clone/friends/request', {
+    await fetch('https://smc-mh.herokuapp.com/friends/request', {
       method: 'PUT',
       mode: 'cors',
       credentials: 'include',
@@ -86,7 +86,7 @@ function Friends(props: any) {
 
   const acceptFriend = async (id: any) => {
     const fetchData = await fetch(
-      'https://mohetti.github.io/fb-clone/friends/response',
+      'https://smc-mh.herokuapp.com/friends/response',
       {
         method: 'PUT',
         mode: 'cors',
@@ -105,7 +105,7 @@ function Friends(props: any) {
   };
 
   const deleteFriend = (id: any) => {
-    fetch('https://mohetti.github.io/fb-clone/friends/delete', {
+    fetch('https://smc-mh.herokuapp.com/friends/delete', {
       method: 'PUT',
       mode: 'cors',
       credentials: 'include',
@@ -121,7 +121,7 @@ function Friends(props: any) {
   };
 
   const deleteRequest = (id: any) => {
-    fetch('https://mohetti.github.io/fb-clone/friends/delete/friendrequest', {
+    fetch('https://smc-mh.herokuapp.com/friends/delete/friendrequest', {
       method: 'PUT',
       mode: 'cors',
       credentials: 'include',
@@ -142,10 +142,7 @@ function Friends(props: any) {
         {userList.map((x: any) => {
           return (
             <div key={uniqid()}>
-              <img
-                src={'https://mohetti.github.io/fb-clone/' + x.img}
-                alt='friend'
-              />
+              <img src={'https://smc-mh.herokuapp.com/' + x.img} alt='friend' />
               <div>
                 {x.firstName} {x.surName}
               </div>

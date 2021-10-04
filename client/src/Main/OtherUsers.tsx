@@ -26,7 +26,7 @@ function OtherUsers(props: any) {
 
   const fetchUser = async () => {
     const data = JSON.stringify({ id: profile.id });
-    const fetchData = await fetch('https://mohetti.github.io/fb-clone/user/', {
+    const fetchData = await fetch('https://smc-mh.herokuapp.com/user/', {
       method: 'POST',
       mode: 'cors',
       credentials: 'include',
@@ -44,20 +44,17 @@ function OtherUsers(props: any) {
 
   const fetchMessages = async () => {
     const data = JSON.stringify({ id: profile.id });
-    const fetchData = await fetch(
-      'https://mohetti.github.io/fb-clone/messages',
-      {
-        method: 'POST',
-        mode: 'cors',
-        credentials: 'include',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-          'xsrf-token': csrf,
-        },
-        body: data,
-      }
-    );
+    const fetchData = await fetch('https://smc-mh.herokuapp.com/messages', {
+      method: 'POST',
+      mode: 'cors',
+      credentials: 'include',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        'xsrf-token': csrf,
+      },
+      body: data,
+    });
     const response = await fetchData.json();
     setMessages(response.docs);
   };
@@ -86,7 +83,7 @@ function OtherUsers(props: any) {
   const like = async (e: React.SyntheticEvent) => {
     const target = e.target as HTMLInputElement;
 
-    await fetch('https://mohetti.github.io/fb-clone/likes/messages', {
+    await fetch('https://smc-mh.herokuapp.com/likes/messages', {
       method: 'PUT',
       mode: 'cors',
       credentials: 'include',
@@ -115,7 +112,7 @@ function OtherUsers(props: any) {
       msg: comments.current[target.id],
     });
 
-    await fetch('https://mohetti.github.io/fb-clone/messages/comment', {
+    await fetch('https://smc-mh.herokuapp.com/messages/comment', {
       method: 'PUT',
       mode: 'cors',
       credentials: 'include',
@@ -155,7 +152,7 @@ function OtherUsers(props: any) {
           <div className='mg5'>
             <img
               className='profile-img'
-              src={'https://mohetti.github.io/fb-clone/' + user.img}
+              src={'https://smc-mh.herokuapp.com/' + user.img}
               alt='profile'
             />
             <span className='mgl'>
@@ -177,7 +174,7 @@ function OtherUsers(props: any) {
                       style={{ cursor: 'pointer' }}
                     >
                       <img
-                        src={'https://mohetti.github.io/fb-clone/' + x.user.img}
+                        src={'https://smc-mh.herokuapp.com/' + x.user.img}
                         alt='hello'
                       />
                       <span>
@@ -218,7 +215,7 @@ function OtherUsers(props: any) {
                                   <img
                                     className='msg-img'
                                     src={
-                                      'https://mohetti.github.io/fb-clone/' +
+                                      'https://smc-mh.herokuapp.com/' +
                                       y.user.img
                                     }
                                     alt='hello'
@@ -246,7 +243,7 @@ function OtherUsers(props: any) {
                                 >
                                   <img
                                     src={
-                                      'https://mohetti.github.io/fb-clone/' +
+                                      'https://smc-mh.herokuapp.com/' +
                                       y.user.img
                                     }
                                     className='msg-img'

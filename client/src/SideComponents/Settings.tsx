@@ -14,7 +14,7 @@ function Settings(props: any) {
   const { userInfo, setUserInfo } = useContext(UserContext);
 
   const deleteProfile = async () => {
-    await fetch('https://mohetti.github.io/fb-clone/user/delete', {
+    await fetch('https://smc-mh.herokuapp.com/user/delete', {
       method: 'POST',
       mode: 'cors',
       credentials: 'include',
@@ -24,7 +24,7 @@ function Settings(props: any) {
         'xsrf-token': csrf,
       },
     });
-    await fetch('https://mohetti.github.io/fb-clone/auth/logout', {
+    await fetch('https://smc-mh.herokuapp.com/auth/logout', {
       method: 'GET',
       mode: 'cors',
       credentials: 'include',
@@ -47,18 +47,15 @@ function Settings(props: any) {
     e.preventDefault();
     const formData = new FormData();
     formData.append('profileImage', selectedFile);
-    const fetchData = await fetch(
-      'https://mohetti.github.io/fb-clone/user/upload',
-      {
-        method: 'POST',
-        body: formData,
-        headers: {
-          Accept: 'multipart/formdata',
-          'xsrf-token': csrf,
-        },
-        credentials: 'include',
-      }
-    );
+    const fetchData = await fetch('https://smc-mh.herokuapp.com/user/upload', {
+      method: 'POST',
+      body: formData,
+      headers: {
+        Accept: 'multipart/formdata',
+        'xsrf-token': csrf,
+      },
+      credentials: 'include',
+    });
     const response = await fetchData.json();
     setUserInfo(response.docs);
   };
@@ -70,7 +67,7 @@ function Settings(props: any) {
   };
   const addBio = async (e: React.SyntheticEvent) => {
     e.preventDefault();
-    await fetch('https://mohetti.github.io/fb-clone/user/bio', {
+    await fetch('https://smc-mh.herokuapp.com/user/bio', {
       method: 'POST',
       mode: 'cors',
       credentials: 'include',

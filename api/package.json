@@ -1,13 +1,16 @@
 {
   "name": "api",
   "version": "1.0.0",
-  "engines": {"node": "15.2.0"},
+  "engines": {
+    "node": "15.2.0"
+  },
   "description": "",
   "main": "index.js",
   "scripts": {
     "start": "node dist/app.js",
     "dev": "nodemon src/app.ts",
-    "build": "tsc -p ."
+    "build": "tsc -p .",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
   },
   "keywords": [],
   "author": "",

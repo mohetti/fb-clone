@@ -1,11 +1,6 @@
 import { RequestHandler } from 'express';
 import User from '../models/newUser';
 
-export const getFriends: RequestHandler = (req, res, next) => {
-  console.log('Get Friends');
-  res.send('Get Friends');
-};
-
 export const sendFriendRequest: RequestHandler = (req, res, next) => {
   User.findOneAndUpdate(
     { _id: req.body.id },

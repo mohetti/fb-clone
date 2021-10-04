@@ -1,6 +1,6 @@
 export const getMessages = async (csrf: string, skip: number) => {
   const fetchData = await fetch(
-    `https://mohetti.github.io/fb-clone/messages?count=${skip}`,
+    `https://smc-mh.herokuapp.com/messages?count=${skip}`,
     {
       method: 'GET',
       mode: 'cors',

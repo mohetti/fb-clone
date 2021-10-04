@@ -1,6 +1,5 @@
 import { Router } from 'express';
 import {
-  getFriends,
   sendFriendRequest,
   sendFriendResponse,
   deleteFriend,
@@ -12,7 +11,6 @@ import isAuth from '../util/is-auth';
 const router = Router();
 
 // get friends list
-router.get('/', isAuth, getFriends);
 router.get('/suggestions', isAuth, getFriendSuggestions);
 
 // send request to user | :id is from logged in user

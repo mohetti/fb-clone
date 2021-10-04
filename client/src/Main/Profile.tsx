@@ -29,7 +29,7 @@ function Profile(props: any) {
           <div className='mg5'>
             <img
               className='profile-img'
-              src={'https://mohetti.github.io/fb-clone/' + user.userInfo!.img}
+              src={'https://smc-mh.herokuapp.com/' + user.userInfo!.img}
               alt='hello'
             ></img>
             <span className='mgl'>

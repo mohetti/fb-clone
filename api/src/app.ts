@@ -17,6 +17,7 @@ import passport from 'passport';
 import * as passportConfig from './util/passport';
 import MongoDBStore from 'connect-mongodb-session';
 import csrf from 'csurf';
+import path from 'path';
 
 export const csrfProtection = csrf({ cookie: true });
 
@@ -85,12 +86,18 @@ app.use('/friends', csrfProtection, friendsRoutes);
 app.use('/comments', csrfProtection, commentsRoutes);
 app.use('/likes', csrfProtection, likesRoutes);
 
+app.use(express.static('client/build'));
+
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, '../client', 'build', 'index.html'));
+});
+
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   res.status(500).json({ message: err.message });
 });
 
-const port = process.env.PORT || 80
+const port = process.env.PORT || 80;
 
 app.listen(port, () => {
-  console.log('Listeneing on' + port);
+  console.log('Listeneing on ' + port);
 });

@@ -30,7 +30,7 @@ const Routing = () => {
   const value = { userInfo, setUserInfo };
   const fetchLoginStatus = async () => {
     const fetchData = await fetch(
-      'https://mohetti.github.io/fb-clone/auth/checkauth',
+      'https://smc-mh.herokuapp.com/auth/checkauth',
       {
         method: 'GET',
         mode: 'cors',
@@ -48,7 +48,7 @@ const Routing = () => {
   };
 
   async function getToken() {
-    let test = await fetch('https://mohetti.github.io/fb-clone/token', {
+    let test = await fetch('https://smc-mh.herokuapp.com/token', {
       headers: {
         method: 'GET',
         Accept: 'application/json',
